@@ -8,9 +8,9 @@ config = {}
 
 def load_config():
     global config
-    config_path = "./config.json"
+    config_path = get_root() + "/config.json"
     if not os.path.exists(config_path):
-        raise Exception('配置文件不存在，请根据config-template.json模板创建config.json文件')
+        raise Exception('配置文件不存在，请根据config-template.json模板创建config.json文件' + get_root())
 
     config_str = read_file(config_path)
     # 将json字符串反序列化为dict类型

@@ -32,15 +32,16 @@ class PluginManager:
         return wrapper
 
     def save_config(self):
-        with open("plugins/plugins.json", "w", encoding="utf-8") as f:
+        with open("/root/chatgpt-on-wechat/plugins/plugins.json", "w", encoding="utf-8") as f:
             json.dump(self.pconf, f, indent=4, ensure_ascii=False)
 
     def load_config(self):
         logger.info("Loading plugins config...")
 
         modified = False
-        if os.path.exists("plugins/plugins.json"):
-            with open("plugins/plugins.json", "r", encoding="utf-8") as f:
+        base_path="/root/chatgpt-on-wechat/"
+        if os.path.exists(f"{base_path}plugins/plugins.json"):
+            with open(f"{base_path}plugins/plugins.json", "r", encoding="utf-8") as f:
                 pconf = json.load(f)
                 pconf['plugins'] = SortedDict(lambda k,v: v["priority"],pconf['plugins'],reverse=True)
         else:
@@ -53,7 +54,7 @@ class PluginManager:
 
     def scan_plugins(self):
         logger.info("Scaning plugins ...")
-        plugins_dir = "plugins"
+        plugins_dir = "/root/chatgpt-on-wechat/plugins"
         for plugin_name in os.listdir(plugins_dir):
             plugin_path = os.path.join(plugins_dir, plugin_name)
             if os.path.isdir(plugin_path):
